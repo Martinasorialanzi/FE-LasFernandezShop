@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import "../stock/stock.css"
-import { Pagination, Table } from 'react-bootstrap'
+import { Table,Form } from 'react-bootstrap'
 import { GetProducts } from '../../api/GetProducts'
 import Paginacion from '../paginacion/Paginacion'
 
@@ -9,6 +9,9 @@ const Stock = () => {
   
   const [productos, setProductos] = useState([]);
   
+  const [tableFilter, setTablefilter] = useState("")
+
+
   useEffect(() => {
     const getProducts = async () => {
       const response = await GetProducts();
@@ -26,6 +29,19 @@ const Stock = () => {
 
   return (
     <>
+  <div className='my-2 text-right'> 
+  <Form className="">
+            <Form.Control
+              type="text"
+              placeholder="Search"
+              className="m-2 p-2"
+              aria-label="Search"
+              onChange={(e)=>setTablefilter(e.target.value)}
+            />
+          </Form>
+  </div>
+
+
     <div className='m-4 justify-content-center'>
     <h2>Stock de prendas</h2>
     </div>

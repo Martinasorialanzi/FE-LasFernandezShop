@@ -10,12 +10,13 @@ export const GetProducts=async()=>{
             method:"GET"
           })
 
-          return response.data
-
+          // console.log(response.data.products)
+          return await response.data.products
     } catch (error) {
         console.log(error.response)
     }
 }
+
 
 
 
