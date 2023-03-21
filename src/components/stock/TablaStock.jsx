@@ -1,20 +1,27 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { GetProducts } from "../../api/GetProducts";
 import { Table } from "react-bootstrap";
-import { Column, useTable, useGlobalFilter } from "react-table";
+import {
+  Column,
+  useTable,
+  useGlobalFilter,
+  useSortBy,
+  usePagination,
+} from "react-table";
 
-const TablaStock = () => {
+const TablaStock = ({ pageCount: controlledPageCount }) => {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [pageCount, setPageCount] = useState(0);
 
-  useEffect(() => {
-    const getProducts = async () => {
-      const response = await GetProducts();
-      setData(response);
-      setIsLoading(false);
-    };
-    getProducts();
-  }, []);
+  const getProducts = async (page) => {
+    setIsLoading(true);
+    const response = await GetProducts({ page: page + 1 });
+    console.log(response);
+    setData(response.products);
+    setPageCount(response.totalPages);
+    setIsLoading(false);
+  };
 
   const columns = useMemo(
     () => [
@@ -24,7 +31,11 @@ const TablaStock = () => {
       { Header: "CATEGORIA", accessor: "categoria" },
       { Header: "TALLE", accessor: "", Cell: "" },
       { Header: "CLIENTE", accessor: "cliente" },
-      { Header: "FECHA DE INGRESO", accessor: "fechaIngreso" },
+      {
+        Header: "FECHA DE INGRESO",
+        accessor: "fechaIngreso",
+        Cell: ({ value }) => <>{value.substring(0, 10)}</>,
+      },
       { Header: "PRECIO DE VENTA", accessor: "precioVenta" },
       { Header: "GANANCIA CLIENTE", Cell: "" },
       { Header: "GANCANIA FERNANDEZ SHOP", accessor: "", Cell: "" },
@@ -40,11 +51,18 @@ const TablaStock = () => {
       data,
       autoResetHiddenColumns: false, //  <-- stops the rerendering
       autoResetSortBy: false, //  <-- stops the rerendering
+      initialState: { pageIndex: 0 }, //pagina que iniciamos
+      manualPagination: true, //true: nosotros manejamos la paginacion
+      pageCount, //le decimos el numero de pagina que tenemos
     },
-    useGlobalFilter
+    useGlobalFilter,
+    useSortBy,
+    usePagination
   );
 
   const {
+    canPreviousPage,
+    canNextPage,
     getTableProps, //funcion que nos devuelve las propiedades que va a recibir la etiqueta table
     getTableBodyProps,
     headerGroups, //array que contiene cada uno d elos grupos del header
@@ -53,8 +71,15 @@ const TablaStock = () => {
     prepareRow,
     preGlobalFilteredRows,
     setGlobalFilter,
+    nextPage,
+    previousPage,
     state,
+    state: { pageIndex },
   } = tableInstance;
+
+  useEffect(() => {
+    getProducts(pageIndex);
+  }, [pageIndex]);
 
   return (
     <>
@@ -76,11 +101,18 @@ const TablaStock = () => {
                 // Loop over the headers in each row
                 headerGroup.headers.map((column) => (
                   // Apply the header cell props
-                  <th {...column.getHeaderProps()}>
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {
                       // Render the header
                       column.render("Header")
                     }
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? " 🔽"
+                          : " 🔼"
+                        : ""}
+                    </span>
                   </th>
                 ))
               }
@@ -102,6 +134,15 @@ const TablaStock = () => {
           })}
         </tbody>
       </Table>
+
+      <div>
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {"<"}
+        </button>
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {">"}
+        </button>
+      </div>
     </>
   );
 };

@@ -3,19 +3,18 @@ import axios from "axios";
 const baseUrl = "http://localhost:8080/v1";
 
 
-export const GetProducts=async()=>{
+export const GetProducts=async({page})=>{
     try {
         const response=await axios({
-            url:`${baseUrl}/products`,
+            url:`${baseUrl}/products?page=${page}`,
             method:"GET"
           })
-
-          // console.log(response.data.products)
-          return await response.data.products
-    } catch (error) {
-        console.log(error.response)
-    }
-}
+          return (response.data)
+          
+        } catch (error) {
+          console.log(error.response)
+        }
+      }
 
 
 
