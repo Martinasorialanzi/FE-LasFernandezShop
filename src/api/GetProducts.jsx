@@ -15,7 +15,20 @@ export const GetProducts=async({page})=>{
           console.log(error.response)
         }
       }
-
+      export const GetProducts2=async()=>{
+        try {
+            const response=await axios({
+                url:`${baseUrl}/products`,
+                method:"GET"
+              })
+              
+              return (response.data)
+              
+            } catch (error) {
+              console.log(error.response)
+            }
+          }
+    
 
 
 

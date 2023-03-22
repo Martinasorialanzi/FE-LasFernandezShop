@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import "../stock/stock.css"
 import { Table,Form } from 'react-bootstrap'
-import { GetProducts } from '../../api/GetProducts'
+import { GetProducts2 } from '../../api/GetProducts'
 import Paginacion from '../paginacion/Paginacion'
 
 const Stock = () => {
@@ -14,8 +14,8 @@ const Stock = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-      const response = await GetProducts();
-      setProductos(response.products);
+      const response = await GetProducts2();
+      setProductos(response.totalProducts);
       
     };
     
