@@ -41,7 +41,7 @@ const ViewProductsModal = ({ producto }, _id) => {
                   <b>Estado: </b>
                   {producto.estado}
                 </p>
-                <Table className="container">
+                <Table  bordered hover className="container">
                   <thead>
                     <tr>
                       <th>Precio de venta</th>

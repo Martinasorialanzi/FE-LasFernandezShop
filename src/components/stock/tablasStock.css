@@ -47,3 +47,9 @@
     border-radius: 8%;
     border-width: 2px;
   }
+
+  .tablaStock{
+    text-align: center !important;
+    align-content: center !important;
+    align-items: center !important;
+  }

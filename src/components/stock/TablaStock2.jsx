@@ -227,7 +227,8 @@ const TablaStock = () => {
       </Stack>
    
     </Stack>
-      <Table striped bordered hover className="container mb-4" {...getTableProps}>
+      <Table striped bordered hover className="container mb-4 tablaStock"  size="xs"
+          responsive="xl"{...getTableProps}>
         <thead>
           {/* Loop over the header rows */}
           {headerGroups.map((headerGroup) => (
