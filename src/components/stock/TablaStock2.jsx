@@ -18,6 +18,8 @@ import {
 import ButtonDelete from "../botones/ButtonDelete";
 import axios from "axios";
 import { ButtonDevolver, ButtonVender } from "../botones/ButtonsUpdateEstado";
+import EditModal from "../botones/EditModal";
+import ViewProductsModal from "../botones/ViewProductsModal";
 
 const TablaStock = () => {
   const [data, setData] = useState([]);
@@ -88,7 +90,7 @@ const TablaStock = () => {
       { Header: "ESTADO", accessor: "estado" },
       { Header: "TIEMPO EN VENTA", accessor: "_id" },
       { Header: "VENDIDO", accessor: (p)=><> {p.estado==="vendido"?<ButtonDevolver _id={p._id}/>:<ButtonVender _id={p._id}/>} </> },
-      { Header: "BORRAR PRODUCTO ", accessor:(_id)=> <><ButtonDelete _id={_id._id}/></>, },
+      { Header: "Ver Producto", accessor:(p)=> <><ViewProductsModal producto={p} _id={p._id}/></>, },
     ],
     []
   );

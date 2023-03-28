@@ -64,7 +64,7 @@ export const ButtonDevolver = (_id) => {
   return (
     <>
 
-    <Button onClick={(e)=>devuelto(_id._id)}>DEVUELTO</Button>
+    <Button onClick={(e)=>devuelto(_id._id)}>Devuelto</Button>
     </>
   )
 }
