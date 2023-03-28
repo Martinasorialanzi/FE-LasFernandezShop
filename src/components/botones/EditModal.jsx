@@ -86,7 +86,7 @@ const EditModal = (_id) => {
     
       return (
         <>
-          <Button size="lg"variant="dark" onClick={(e) => handleShow(_id)}>
+          <Button size="md"variant="dark" onClick={(e) => handleShow(_id)}>
             Editar
           </Button>
     

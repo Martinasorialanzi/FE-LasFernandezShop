@@ -32,7 +32,7 @@ const ButtonDelete = (_id) => {
       }
   return (
     <>
-    <Button onClick={(e)=>borrarProduct(_id._id)}>Delete</Button>
+    <Button variant="dark" size="md" onClick={(e)=>borrarProduct(_id._id)}>Delete</Button>
     </>
   )
 }

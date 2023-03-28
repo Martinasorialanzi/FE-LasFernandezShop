@@ -11,7 +11,7 @@ const ViewProductsModal = ({ producto }, _id) => {
 
   return (
     <>
-      <Button variant="dark" onClick={handleShow} className="botonVerProducto">
+      <Button variant="dark" size="sm" onClick={handleShow} className="botonVerProducto">
         Ver Producto
       </Button>
 

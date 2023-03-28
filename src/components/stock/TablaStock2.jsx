@@ -7,6 +7,9 @@ import {
   Form,
   DropdownButton,
   Dropdown,
+  Offcanvas,
+  Container,
+  Stack,
 } from "react-bootstrap";
 import {
   Column,
@@ -20,13 +23,19 @@ import axios from "axios";
 import { ButtonDevolver, ButtonVender } from "../botones/ButtonsUpdateEstado";
 import EditModal from "../botones/EditModal";
 import ViewProductsModal from "../botones/ViewProductsModal";
+import { MdFilterAlt } from "react-icons/md";
+import "../stock/tablasStock.css"
 
 const TablaStock = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   // const baseUrl = "http://localhost:8080/v1";
-
 
   // const getProducts=useCallback( async()=>{
   //   try {
@@ -36,16 +45,16 @@ const TablaStock = () => {
   //         })
   //       const results= await response.data.totalProducts
   //         setData(results)
-          
+
   //       } catch (error) {
   //         console.log(error.response)
   //       }
   //     },[])
 
-  const getProducts =  async () => {
+  const getProducts = async () => {
     setIsLoading(true);
-    const response = await GetProducts2()
-    setData(response.totalProducts)
+    const response = await GetProducts2();
+    setData(response.totalProducts);
     setIsLoading(false);
   };
 
@@ -68,11 +77,11 @@ const TablaStock = () => {
         ),
       },
       { Header: "CLIENTE", accessor: "cliente" },
-      {
-        Header: "FECHA DE INGRESO",
-        accessor: "fechaIngreso",
-        Cell: ({ value }) => <>{value.substring(0, 10)}</>,
-      },
+      // {
+      //   Header: "FECHA DE INGRESO",
+      //   accessor: "fechaIngreso",
+      //   Cell: ({ value }) => <>{value.substring(0, 10)}</>,
+      // },
       {
         Header: "PRECIO DE VENTA",
         accessor: (p) => `$ ${p.precioVenta}`,
@@ -88,14 +97,31 @@ const TablaStock = () => {
         accessor: (d) => `$ ${Math.ceil(d.precioVenta * 0.3)}`,
       },
       { Header: "ESTADO", accessor: "estado" },
-      { Header: "TIEMPO EN VENTA", accessor: "_id" },
-      { Header: "VENDIDO", accessor: (p)=><> {p.estado==="vendido"?<ButtonDevolver _id={p._id}/>:<ButtonVender _id={p._id}/>} </> },
-      { Header: "Ver Producto", accessor:(p)=> <><ViewProductsModal producto={p} _id={p._id}/></>, },
+      // { Header: "TIEMPO EN VENTA", accessor: "_id" },
+      {
+        Header: "VENDIDO",
+        accessor: (p) => (
+          <>
+            {" "}
+            {p.estado === "vendido" ? (
+              <ButtonDevolver _id={p._id} />
+            ) : (
+              <ButtonVender _id={p._id} />
+            )}{" "}
+          </>
+        ),
+      },
+      {
+        Header: "Ver Producto",
+        accessor: (p) => (
+          <>
+            <ViewProductsModal producto={p} _id={p._id} />
+          </>
+        ),
+      },
     ],
     []
   );
-
-
 
   const tableInstance = useTable(
     {
@@ -136,49 +162,72 @@ const TablaStock = () => {
   const { pageIndex, pageSize } = state;
 
   useEffect(() => {
-    
-      getProducts();
-    
-    console.log("actualizado")
-  }, []);
+    getProducts();
 
+    console.log("actualizado");
+  }, []);
 
   return (
     <>
-      <div>
+    <Stack direction="horizontal">
+      <Container className="div-titulo">
+    <h2 className="justify-content-center">Tabla de stock</h2>
+
+      </Container>
+    
+      <Stack direction="vertical" className="div-buscador-filtros">
+    <div className="div-buscador ">
+        <b className="m-1"> Buscar: </b> 
+        <br/>
         <input
           type="text"
           value={state.globalFilter}
           onChange={(e) => setGlobalFilter(e.target.value)}
+          className="selectInput-paginacion"
         ></input>
-        {/* <p>Cantidad de filas encontradas: {preGlobalFilteredRows.length}</p> */}
       </div>
-      <div>
-        {/* <DropdownButton id="dropdown-basic-button" title="Dropdown button">    */}
-        {/* <Dropdown.Item> */}
-        <div>
-          <Form.Check
-            type="checkbox"
-            label={"Toggle All"}
-            {...getToggleHideAllColumnsProps()}
-          />
-        </div>
-        {/* </Dropdown.Item> */}
-        <div>
-          {allColumns.map((column) => (
-            // <Dropdown.Item  key={column.id}>
-            <div key={column.id}>
-              <label>
-                <input type="checkbox" {...column.getToggleHiddenProps()} />
-                {column.Header}
-              </label>
+      
+     
+      <Container className=" container-filtro">
+        <Button
+          variant="dark"
+          onClick={handleShow}
+          className="boton-filtros"
+          size="sm"
+        >
+          Columnas <MdFilterAlt />
+        </Button>
+
+        <Offcanvas show={show} onHide={handleClose} placement="bottom"  className="offcanvasFiltros">
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Filtro columnas</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <div>
+              <Form.Check
+                type="checkbox"
+                label={"Toggle All"}
+                {...getToggleHideAllColumnsProps()}
+              />
             </div>
-            /* </Dropdown.Item> */
-          ))}
-        </div>
-        {/* </DropdownButton> */}
-      </div>
-      <Table striped bordered hover className="container " {...getTableProps}>
+
+            <div>
+              {allColumns.map((column) => (
+                <div key={column.id}>
+                  <label>
+                    <input type="checkbox" {...column.getToggleHiddenProps()} />
+                    {column.Header}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </Offcanvas.Body>
+        </Offcanvas>
+      </Container>
+      </Stack>
+   
+    </Stack>
+      <Table striped bordered hover className="container mb-4" {...getTableProps}>
         <thead>
           {/* Loop over the header rows */}
           {headerGroups.map((headerGroup) => (
@@ -222,20 +271,15 @@ const TablaStock = () => {
         </tbody>
       </Table>
 
-      <div>
-        <span>
-          Page{" "}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>
-        </span>
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {"<<"}
-        </button>
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {"<"}
-        </button>
+      <Container className="container-paginacion">
 
+        <Button variant="dark" size="sm" className="mx-2" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {"<<"}
+        </Button>
+        <Button variant="dark" size="sm" className="mx-2" onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {"<"}
+        </Button>
+    
         <input
           type="number"
           value={pageIndex + 1}
@@ -245,18 +289,22 @@ const TablaStock = () => {
             const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0;
             gotoPage(pageNumber);
           }}
+          className="mx-2 justify-content-center selectInput-paginacion"
+          
         />
+       {"  "} of {"  "} {pageOptions.length}
 
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
+        <Button variant="dark" size="sm" className="mx-2" onClick={() => nextPage()} disabled={!canNextPage}>
           {">"}
-        </button>
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+        </Button>
+        <Button variant="dark" size="sm" className="mx-2" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
           {">>"}
-        </button>
+        </Button>
 
         <select
           value={pageSize}
           onChange={(e) => setPageSize(Number(e.target.value))}
+          className="selectInput-paginacion"
         >
           {[25, 50, 75, 100].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
@@ -264,7 +312,7 @@ const TablaStock = () => {
             </option>
           ))}
         </select>
-      </div>
+      </Container>
     </>
   );
 };
