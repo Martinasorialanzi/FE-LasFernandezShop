@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { GetProducts2 } from "../../api/GetProducts";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { deleteProduct, GetProducts2 } from "../../api/GetProducts";
 import {
   Button,
   FormCheck,
@@ -16,16 +16,34 @@ import {
   usePagination,
 } from "react-table";
 import ButtonDelete from "../botones/ButtonDelete";
+import axios from "axios";
+import { ButtonDevolver, ButtonVender } from "../botones/ButtonsUpdateEstado";
 
 const TablaStock = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getProducts = async (page) => {
-    setIsLoading(true);
-    const response = await GetProducts2();
-    setData(response.totalProducts);
+  // const baseUrl = "http://localhost:8080/v1";
 
+
+  // const getProducts=useCallback( async()=>{
+  //   try {
+  //       const response=await axios({
+  //           url:`${baseUrl}/products`,
+  //           method:"GET"
+  //         })
+  //       const results= await response.data.totalProducts
+  //         setData(results)
+          
+  //       } catch (error) {
+  //         console.log(error.response)
+  //       }
+  //     },[])
+
+  const getProducts =  async () => {
+    setIsLoading(true);
+    const response = await GetProducts2()
+    setData(response.totalProducts)
     setIsLoading(false);
   };
 
@@ -68,11 +86,14 @@ const TablaStock = () => {
         accessor: (d) => `$ ${Math.ceil(d.precioVenta * 0.3)}`,
       },
       { Header: "ESTADO", accessor: "estado" },
-      { Header: "TIEMPO EN VENTA", accessor: "tiempoEnVenta", cell: "chau" },
-      { Header: "TIEMPO ", Cell: <><ButtonDelete/></>, },
+      { Header: "TIEMPO EN VENTA", accessor: "_id" },
+      { Header: "VENDIDO", accessor: (p)=><> {p.estado==="vendido"?<ButtonDevolver _id={p._id}/>:<ButtonVender _id={p._id}/>} </> },
+      { Header: "BORRAR PRODUCTO ", accessor:(_id)=> <><ButtonDelete _id={_id._id}/></>, },
     ],
     []
   );
+
+
 
   const tableInstance = useTable(
     {
@@ -113,8 +134,12 @@ const TablaStock = () => {
   const { pageIndex, pageSize } = state;
 
   useEffect(() => {
-    getProducts();
+    
+      getProducts();
+    
+    console.log("actualizado")
   }, []);
+
 
   return (
     <>

@@ -15,7 +15,7 @@ export const GetProducts=async({page})=>{
           console.log(error.response)
         }
       }
-      export const GetProducts2=async()=>{
+      export const GetProducts2=(async()=>{
         try {
             const response=await axios({
                 url:`${baseUrl}/products`,
@@ -27,7 +27,7 @@ export const GetProducts=async({page})=>{
             } catch (error) {
               console.log(error.response)
             }
-          }
+          })
     
 
 
