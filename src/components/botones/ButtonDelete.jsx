@@ -19,6 +19,7 @@ const ButtonDelete = (_id) => {
         }).then((result) => {
           if (result.isConfirmed) {
             deleteProduct(_id)
+
             Swal.fire(
               {icon: 'success',
               title: 'Producto borrado!',
@@ -29,6 +30,8 @@ const ButtonDelete = (_id) => {
     
           }
         })
+        
+      
       }
   return (
     <>

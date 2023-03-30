@@ -69,7 +69,7 @@ const ViewProductsModal = ({ producto }, _id) => {
         </Modal.Body>
         <Modal.Footer>
           <EditModal _id={producto._id}/>
-          <ButtonDelete _id={producto._id}/>
+          <ButtonDelete _id={producto._id} />
           
         </Modal.Footer>
       </Modal>

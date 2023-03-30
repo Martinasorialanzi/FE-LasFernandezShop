@@ -1,4 +1,6 @@
-import axios from "axios";
+import axios from "axios"
+import React,{useEffect} from 'react'
+
 
 const baseUrl = "http://localhost:8080/v1";
 
@@ -17,12 +19,17 @@ export const GetProducts=async({page})=>{
       }
       export const GetProducts2=(async()=>{
         try {
-            const response=await axios({
-                url:`${baseUrl}/products`,
-                method:"GET"
-              })
-              
-              return (response.data)
+          
+            const response= await axios({
+              url:`${baseUrl}/products`,
+              method:"GET"
+            })
+          
+            
+            return (response.data)
+        
+        
+           
               
             } catch (error) {
               console.log(error.response)
@@ -54,6 +61,7 @@ export const deleteProduct = async (_id) => {
       url: `${baseUrl}/product/${_id}`,
       method: "DELETE",
     });
+  
   } catch (error) {
     console.log(error.response.data);
   }
