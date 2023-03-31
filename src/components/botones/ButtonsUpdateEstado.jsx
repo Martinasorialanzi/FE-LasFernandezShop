@@ -5,22 +5,20 @@ import Swal from 'sweetalert2'
 import { GetProducts2 } from '../../api/GetProducts'
 
 
-export const ButtonVender = (_id,{setData}) => {
+export const ButtonVender = (_id) => {
 
 
-  const getProducts = async () => {
-    const response = await GetProducts2();
-    setData(response.totalProducts);
-   
-  };
 
     const vender=(_id)=>{
+
+      
+
         const formData = {
             estado:"vendido"
           };
           console.log(formData);
           UpdateProduct(_id, formData);
-          getProducts()
+          
           Swal.fire(
             {icon: 'success',
             title: 'Producto vendido!',
@@ -40,13 +38,9 @@ export const ButtonVender = (_id,{setData}) => {
   )
 }
 
-export const ButtonDevolver = (_id,{setData}) => {
+export const ButtonDevolver = (_id) => {
 
-  const getProducts = async () => {
-    const response = await GetProducts2();
-    setData(response.totalProducts);
-   
-  };
+
     const devuelto=(_id)=>{
 
 
@@ -66,7 +60,7 @@ export const ButtonDevolver = (_id,{setData}) => {
           }).then((result) => {
             if (result.isConfirmed) {
                 UpdateProduct(_id, formData)
-                  getProducts()
+
                 ;
               Swal.fire(
                 {icon: 'success',

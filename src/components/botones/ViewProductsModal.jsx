@@ -1,7 +1,11 @@
 import React, {useState} from "react";
-import ButtonDelete from "./ButtonDelete";
 import EditModal from "./EditModal";
 import { Button,Modal,Table, Stack } from "react-bootstrap";
+import { deleteProduct } from '../../store/slices/products'
+import { useDispatch } from 'react-redux'
+import { useCallback } from 'react'
+import Swal from 'sweetalert2'
+
 
 const ViewProductsModal = ({ producto }, _id) => {
   const [show, setShow] = useState(false);
@@ -9,7 +13,41 @@ const ViewProductsModal = ({ producto }, _id) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const dispatch=useDispatch()
+  
+
+  const borrarProduct = useCallback((_id) => {
+      Swal.fire({
+        title: 'Estas seguro?',
+        text: "No se podra revertir!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#E95821',
+        cancelButtonColor: '#5B5B5B',
+        confirmButtonText: 'Si, borrar!',
+        confirmButtonColor: '#E95821',
+        
+      }).then((result) => {
+        if (result.isConfirmed) {
+         dispatch( deleteProduct(_id))
+
+          Swal.fire(
+            {icon: 'success',
+            title: 'Producto borrado!',
+            showConfirmButton: false,
+            timer: 1500}
+          )
+          setShow(false)
+  
+        }
+      })      
+
+    },[])
+
+
   return (
+
+    
     <>
       <Button variant="dark" size="sm" onClick={handleShow} className="botonVerProducto">
         Ver Producto
@@ -69,7 +107,7 @@ const ViewProductsModal = ({ producto }, _id) => {
         </Modal.Body>
         <Modal.Footer>
           <EditModal _id={producto._id}/>
-          <ButtonDelete _id={producto._id} />
+          <Button variant="dark" size="md" onClick={(e)=>borrarProduct(producto._id)}>Delete</Button>
           
         </Modal.Footer>
       </Modal>

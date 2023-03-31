@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from "react";
-import {GetProducts2 } from "../../api/GetProducts";
 import {
   Button,
   Table,
@@ -18,6 +17,10 @@ import { ButtonDevolver, ButtonVender } from "../botones/ButtonsUpdateEstado";
 import ViewProductsModal from "../botones/ViewProductsModal";
 import { MdFilterAlt } from "react-icons/md";
 import "../stock/tablaStock.css"
+import { getProducts, productsSelectors } from "../../store/slices/products"; 
+import { useDispatch,useSelector } from "react-redux";  
+
+
 
 const TablaStock = () => {
   const [show, setShow] = useState(false);
@@ -25,36 +28,15 @@ const TablaStock = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
-  // const baseUrl = "http://localhost:8080/v1";
+  const productos= useSelector(productsSelectors.selectAll)   //aca traigo el state list(lo renombro como productos) y con use selector lo actualizo al estado products
+  const dispatch=useDispatch() //esta funcion va ejeutar la funcion getProducts
 
-  // const getProducts=useCallback( async()=>{
-  //   try {
-  //       const response=await axios({
-  //           url:`${baseUrl}/products`,
-  //           method:"GET"
-  //         })
-  //       const results= await response.data.totalProducts
-  //         setData(results)
+    useEffect(() => {
+      dispatch(getProducts())
+    }, [dispatch])
 
-  //       } catch (error) {
-  //         console.log(error.response)
-  //       }
-  //     },[])
-  const getProducts = async () => {
-    setIsLoading(true);
-    const response = await GetProducts2();
-    setData(response.totalProducts);
-    setIsLoading(false)
-  };
 
-  useEffect(() => {
-    getProducts();
-
-    console.log("actualizado");
-  }, []);
 
  
 
@@ -106,7 +88,7 @@ const TablaStock = () => {
             {p.estado === "vendido" ? (
               <ButtonDevolver _id={p._id} />
             ) : (
-              <ButtonVender _id={p._id} setData={setData}  />
+              <ButtonVender _id={p._id}   />
             )}{" "}
           </>
         ),
@@ -126,7 +108,7 @@ const TablaStock = () => {
   const tableInstance = useTable(
     {
       columns,
-      data,
+      data:productos,
       autoResetHiddenColumns: false, //  <-- stops the rerendering
       autoResetSortBy: false, //  <-- stops the rerendering
       initialState: { pageSize: 50 },
@@ -311,7 +293,8 @@ const TablaStock = () => {
         </select>
       </Container>
     </>
-  );
+  )
+  ;
 };
 
 export default TablaStock;

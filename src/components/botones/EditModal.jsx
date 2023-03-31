@@ -2,11 +2,13 @@ import React,{useState} from 'react'
 import { FormSelect,Form, Button, Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2'
 import { GetProduct, UpdateProduct } from '../../api/GetProducts';
+import { useSelector, useDispatch } from 'react-redux';
 
 const EditModal = (_id) => {
 
-  
-        
+  const {list:productos}= useSelector(state=>state.products)   //aca traigo el state list(lo renombro como productos) y con use selector lo actualizo al estado products
+  const dispatch=useDispatch()
+
       const [show, setShow] = useState(false);
     
       const [prenda, setPrenda] = useState("");
