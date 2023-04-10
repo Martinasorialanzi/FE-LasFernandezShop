@@ -1,0 +1,25 @@
+//es un formateador como prettier. asi se configura para que solo funcione eneste proyecto.
+
+//por ahora sigue siendo mejor slind y prettier pero rome es mucho mas rapido
+
+{
+    "css.lint.unknownAtRules": "ignore",
+
+"editor.formatOnSave": true,
+"editor.codeActionsOnSave": {
+    "source.fixAll.rome":true,
+    "source.organizeImports": true
+},
+"[javascript]": {
+    "editor.defaultFormatter": "rome.rome",
+},
+"[javascriptreact]": {
+    "editor.defaultFormatter": "rome.rome",
+},
+"[typescriptreact]": {
+    "editor.defaultFormatter": "rome.rome",
+},
+"[typescript]": {
+    "editor.defaultFormatter": "rome.rome",
+},  //para todos estos lenguajes tiene que usar rome
+}

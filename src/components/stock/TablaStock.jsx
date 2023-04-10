@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo,memo } from "react";
 import {
   Button,
   Table,
@@ -297,4 +297,4 @@ const TablaStock = () => {
   ;
 };
 
-export default TablaStock;
+export default memo (TablaStock);
