@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import { getProduct, productsSelectors, updateProduct } from "../../store/slices/products";
+// import { getProduct, updateProduct } from "../../store/slices/products";
 
 const EditModal = (_id) => {
 	const dispatch = useDispatch();
@@ -19,10 +19,10 @@ const EditModal = (_id) => {
 
 	const handleClose = () => setShow(false);
 
-	const producto = useSelector(productsSelectors.selectById);
+	// const producto = useSelector(productsSelectors.selectById);
 	const handleShow = (_id) => {
-		dispatch(getProduct(_id._id));
-		console.log(producto);
+		// dispatch(getProduct(_id._id));
+		// console.log(producto);
 		// try {
 		//   const getProduct = async () => {
 		//     const response = await GetProduct(_id._id);
@@ -50,7 +50,7 @@ const EditModal = (_id) => {
 			showDenyButton: true,
 			showConfirmButton: true,
 			confirmButtonText: "Guardar",
-			denyButtonText: `No guardar`,
+			// denyButtonText: `No guardar`,
 			confirmButtonColor: "#E95821",
 			denyButtonColor: "#5B5B5B",
 		}).then((result) => {
@@ -68,7 +68,7 @@ const EditModal = (_id) => {
 				};
 				console.log(formData);
 				console.log(_id._id);
-				dispatch(updateProduct(_id, { formData }));
+				// dispatch(updateProduct(_id, { formData }));
 				//  (UpdateProduct(_id._id, formData));
 				handleClose();
 			} else if (result.isDenied) {

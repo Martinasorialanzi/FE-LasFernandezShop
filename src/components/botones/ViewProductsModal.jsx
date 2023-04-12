@@ -1,9 +1,10 @@
+import { deleteProductById } from "../../store/slices/products";
+import EditModal from "./EditModal";
+// import { deleteProduct } from "../../store/slices/products";
 import React, { useCallback, useState } from "react";
 import { Button, Modal, Stack, Table } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import { deleteProduct } from "../../store/slices/products";
-import EditModal from "./EditModal";
 
 const ViewProductsModal = ({ producto }, _id) => {
 	const [show, setShow] = useState(false);
@@ -24,7 +25,7 @@ const ViewProductsModal = ({ producto }, _id) => {
 			confirmButtonText: "Si, borrar!",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				dispatch(deleteProduct(_id._id));
+				dispatch(deleteProductById(_id._id));
 
 				Swal.fire({
 					icon: "success",
@@ -87,7 +88,7 @@ const ViewProductsModal = ({ producto }, _id) => {
 								</Table>
 								<p className="categorias-view-product">
 									<b>Fecha de ingreso al sistema: </b>
-									{producto.fechaIngreso.substring(0, 10)}
+									{/* {producto.fechaIngreso.substring(0, 10)} */}
 								</p>
 							</Stack>
 						</div>
