@@ -1,15 +1,15 @@
-import "./App.css";
-import Rutas from "./components/rutas/Rutas";
+import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Provider } from "react-redux";
-import store from "./store";
+import "./App.css";
+import { apiSlice } from "./api/apiSlice";
+import Rutas from "./components/rutas/Rutas";
 
 function App() {
   return (
     <>
-      <Provider store={store}>
+      <ApiProvider api={apiSlice}>
         <Rutas />
-      </Provider>
+      </ApiProvider>
     </>
   );
 }
