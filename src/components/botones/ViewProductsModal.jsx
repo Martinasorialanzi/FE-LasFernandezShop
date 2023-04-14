@@ -2,9 +2,8 @@ import EditModal from "./EditModal";
 // import { deleteProduct } from "../../store/slices/products";
 import React, { useCallback, useState } from "react";
 import { Button, Modal, Stack, Table } from "react-bootstrap";
-import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import { deleteProductById } from "../../store/slices/products";
+import { useDeleteProductMutation } from "../../api/apiSlice";
 
 const ViewProductsModal = ({ producto }, _id) => {
 	const [show, setShow] = useState(false);
@@ -12,7 +11,7 @@ const ViewProductsModal = ({ producto }, _id) => {
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	const dispatch = useDispatch();
+	const [deleteProduct] = useDeleteProductMutation()
 
 	const borrarProduct = useCallback((_id) => {
 		Swal.fire({
@@ -25,8 +24,8 @@ const ViewProductsModal = ({ producto }, _id) => {
 			confirmButtonText: "Si, borrar!",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				 dispatch(deleteProductById(_id._id));
 
+				deleteProduct(_id._id)
 				Swal.fire({
 					icon: "success",
 					title: "Producto borrado!",

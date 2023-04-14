@@ -1,41 +1,41 @@
 import axios from "axios"
-import React,{useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 
 const baseUrl = "http://localhost:8080/v1";
 
 
-export const GetProducts=async({page})=>{
-    try {
-        const response=await axios({
-            url:`${baseUrl}/products?page=${page}`,
-            method:"GET"
-          })
-          return (response.data)
-          
-        } catch (error) {
-          console.log(error.response)
-        }
-      }
-      export const GetProducts2=(async()=>{
-        try {
-          
-            const response= await axios({
-              url:`${baseUrl}/products`,
-              method:"GET"
-            })
-          
-            
-            return (response.data)
-        
-        
-           
-              
-            } catch (error) {
-              console.log(error.response)
-            }
-          })
-    
+export const GetProducts = async ({ page }) => {
+  try {
+    const response = await axios({
+      url: `${baseUrl}/products?page=${page}`,
+      method: "GET"
+    })
+    return (response.data)
+
+  } catch (error) {
+    console.log(error.response)
+  }
+}
+export const GetProducts2 = (async () => {
+  try {
+
+    const response = await axios({
+      url: `${baseUrl}/products`,
+      method: "GET"
+    })
+
+
+    return (response.data)
+
+
+
+
+  } catch (error) {
+    console.log(error.response)
+  }
+})
+
 
 
 
@@ -61,7 +61,7 @@ export const deleteProduct = async (_id) => {
       url: `${baseUrl}/product/${_id}`,
       method: "DELETE",
     });
-  
+
   } catch (error) {
     console.log(error.response.data);
   }
@@ -88,7 +88,7 @@ export const UpdateProduct = async (_id, formData) => {
   try {
     await axios({
       url: `${baseUrl}/product/${_id}`,
-      method: "PUT",
+      method: "PATCH",
       data: formData,
     });
   } catch (error) {

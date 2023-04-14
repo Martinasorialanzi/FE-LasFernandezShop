@@ -2,6 +2,7 @@ import React, { memo, useState } from "react";
 import { Button, Container, Form, Offcanvas, Stack, Table } from "react-bootstrap";
 import { MdFilterAlt } from "react-icons/md";
 import { useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
+import FormAddProducts from "../botones/FormAddProducts";
 import "../stock/tablaStock.css";
 
 const TablaStock = ({ columns, data }) => {
@@ -10,7 +11,7 @@ const TablaStock = ({ columns, data }) => {
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	
+
 
 	const tableInstance = useTable(
 		{
@@ -95,6 +96,7 @@ const TablaStock = ({ columns, data }) => {
 								</div>
 							</Offcanvas.Body>
 						</Offcanvas>
+						<FormAddProducts codigo={preGlobalFilteredRows.length} />
 					</Container>
 				</Stack>
 			</Stack>

@@ -1,15 +1,17 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { UpdateProduct } from "../../api/GetProducts";
+import { useUpdateEstadoProductMutation } from "../../api/apiSlice";
 
 export const ButtonVender = (_id) => {
+
+	const [updateState] = useUpdateEstadoProductMutation()
 	const vender = (_id) => {
 		const formData = {
 			estado: "vendido",
 		};
 		console.log(formData);
-		UpdateProduct(_id, formData);
+		updateState(_id, formData);
 
 		Swal.fire({ icon: "success", title: "Producto vendido!", showConfirmButton: false, timer: 1500 });
 	};
@@ -24,6 +26,8 @@ export const ButtonVender = (_id) => {
 };
 
 export const ButtonDevolver = (_id) => {
+	const [updateState] = useUpdateEstadoProductMutation()
+
 	const devuelto = (_id) => {
 		const formData = {
 			estado: "local",
@@ -38,7 +42,7 @@ export const ButtonDevolver = (_id) => {
 			confirmButtonColor: "#E95821",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				UpdateProduct(_id, formData);
+				updateState(_id, formData);
 				Swal.fire({ icon: "success", title: "Producto devuelto!", showConfirmButton: false, timer: 1500 });
 			}
 		});

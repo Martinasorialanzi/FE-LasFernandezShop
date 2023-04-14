@@ -5,9 +5,7 @@ import ViewProductsModal from "../botones/ViewProductsModal";
 import "../stock/tablaStock.css";
 import TablaStock from './TablaStock';
 
-const Tabla = () => {
-   
-
+const PageTablaStock = () => {
 	const columns = useMemo(
 		() => [
 			{ Header: "CODIGO", accessor: "codigo" },
@@ -21,8 +19,8 @@ const Tabla = () => {
 						{t.talle
 							? t.talle
 							: t.prenda.includes("TALLE")
-							? t.prenda.substring(t.prenda.length - 8).substring(6)
-							: null}
+								? t.prenda.substring(t.prenda.length - 8).substring(6)
+								: null}
 					</>
 				),
 			},
@@ -65,16 +63,15 @@ const Tabla = () => {
 		],
 		[],
 	);
-    const {data,isError, isLoading,error}= useGetProductsQuery()  //ME PUEDO DVOLVER LA DATA, EL ERROR(TRUE FALSE), PROPIEDAD IS LOADING (TRUEFALSE), ERROR CUAL ES EL ERROR
-	
-	if(isLoading) return <div>Loading...</div>;
-	else if(isError) return <div>Error:{error.message}</div>;
+	const { data, isError, isLoading, error } = useGetProductsQuery()  //ME PUEDO DVOLVER LA DATA, EL ERROR(TRUE FALSE), PROPIEDAD IS LOADING (TRUEFALSE), ERROR CUAL ES EL ERROR
 
-  return (
-    <>
-    <TablaStock data={data.totalProducts} columns={columns}/>
-    </>
-  )
+	if (isLoading) return <div>Loading...</div>;
+	else if (isError) return <div>Error:{error}</div>;
+	return (
+		<>
+			<TablaStock data={data.totalProducts} columns={columns} />
+		</>
+	)
 }
 
-export default Tabla
+export default PageTablaStock
