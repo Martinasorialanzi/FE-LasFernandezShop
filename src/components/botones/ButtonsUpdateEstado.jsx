@@ -4,16 +4,17 @@ import Swal from "sweetalert2";
 import { useUpdateEstadoProductMutation } from "../../api/apiSlice";
 
 export const ButtonVender = (_id) => {
-
-	const [updateState] = useUpdateEstadoProductMutation()
+	const [updateState] = useUpdateEstadoProductMutation();
 	const vender = (_id) => {
-		const formData = {
-			estado: "vendido",
-		};
-		console.log(formData);
-		updateState(_id, formData);
+		console.log(_id);
+		updateState({ estado: "vendido", _id });
 
-		Swal.fire({ icon: "success", title: "Producto vendido!", showConfirmButton: false, timer: 1500 });
+		Swal.fire({
+			icon: "success",
+			title: "Producto vendido!",
+			showConfirmButton: false,
+			timer: 1500,
+		});
 	};
 
 	return (
@@ -26,13 +27,9 @@ export const ButtonVender = (_id) => {
 };
 
 export const ButtonDevolver = (_id) => {
-	const [updateState] = useUpdateEstadoProductMutation()
+	const [updateState] = useUpdateEstadoProductMutation();
 
 	const devuelto = (_id) => {
-		const formData = {
-			estado: "local",
-		};
-
 		Swal.fire({
 			title: "Estas seguro?",
 			icon: "warning",
@@ -42,8 +39,13 @@ export const ButtonDevolver = (_id) => {
 			confirmButtonColor: "#E95821",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				updateState(_id, formData);
-				Swal.fire({ icon: "success", title: "Producto devuelto!", showConfirmButton: false, timer: 1500 });
+				updateState({ estado: "local", _id });
+				Swal.fire({
+					icon: "success",
+					title: "Producto devuelto!",
+					showConfirmButton: false,
+					timer: 1500,
+				});
 			}
 		});
 	};

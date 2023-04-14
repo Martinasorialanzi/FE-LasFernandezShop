@@ -1,7 +1,19 @@
 import React, { memo, useState } from "react";
-import { Button, Container, Form, Offcanvas, Stack, Table } from "react-bootstrap";
+import {
+	Button,
+	Container,
+	Form,
+	Offcanvas,
+	Stack,
+	Table,
+} from "react-bootstrap";
 import { MdFilterAlt } from "react-icons/md";
-import { useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
+import {
+	useGlobalFilter,
+	usePagination,
+	useSortBy,
+	useTable,
+} from "react-table";
 import FormAddProducts from "../botones/FormAddProducts";
 import "../stock/tablaStock.css";
 
@@ -10,8 +22,6 @@ const TablaStock = ({ columns, data }) => {
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-
-
 
 	const tableInstance = useTable(
 		{
@@ -23,7 +33,7 @@ const TablaStock = ({ columns, data }) => {
 		},
 		useGlobalFilter,
 		useSortBy,
-		usePagination,
+		usePagination
 	);
 
 	const {
@@ -71,24 +81,41 @@ const TablaStock = ({ columns, data }) => {
 					</div>
 
 					<Container className=" container-filtro">
-						<Button variant="dark" onClick={handleShow} className="boton-filtros" size="sm">
+						<Button
+							variant="dark"
+							onClick={handleShow}
+							className="boton-filtros"
+							size="sm"
+						>
 							Columnas <MdFilterAlt />
 						</Button>
 
-						<Offcanvas show={show} onHide={handleClose} placement="bottom" className="offcanvasFiltros">
+						<Offcanvas
+							show={show}
+							onHide={handleClose}
+							placement="bottom"
+							className="offcanvasFiltros"
+						>
 							<Offcanvas.Header closeButton>
 								<Offcanvas.Title>Filtro columnas</Offcanvas.Title>
 							</Offcanvas.Header>
 							<Offcanvas.Body>
 								<div>
-									<Form.Check type="checkbox" label={"Toggle All"} {...getToggleHideAllColumnsProps()} />
+									<Form.Check
+										type="checkbox"
+										label={"Toggle All"}
+										{...getToggleHideAllColumnsProps()}
+									/>
 								</div>
 
 								<div>
 									{allColumns.map((column) => (
 										<div key={column.id}>
 											<label>
-												<input type="checkbox" {...column.getToggleHiddenProps()} />
+												<input
+													type="checkbox"
+													{...column.getToggleHiddenProps()}
+												/>
 												{column.Header}
 											</label>
 										</div>
@@ -100,7 +127,15 @@ const TablaStock = ({ columns, data }) => {
 					</Container>
 				</Stack>
 			</Stack>
-			<Table striped bordered hover className="container mb-4 tablaStock" size="xs" responsive="xl" {...getTableProps}>
+			<Table
+				striped
+				bordered
+				hover
+				className="container mb-4 tablaStock"
+				size="xs"
+				responsive="xl"
+				{...getTableProps}
+			>
 				<thead>
 					{/* Loop over the header rows */}
 					{headerGroups.map((headerGroup) => (
@@ -115,7 +150,13 @@ const TablaStock = ({ columns, data }) => {
 											// Render the header
 											column.render("Header")
 										}
-										<span>{column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}</span>
+										<span>
+											{column.isSorted
+												? column.isSortedDesc
+													? " 🔽"
+													: " 🔼"
+												: ""}
+										</span>
 									</th>
 								))
 							}
@@ -128,7 +169,9 @@ const TablaStock = ({ columns, data }) => {
 						return (
 							<tr {...row.getRowProps()}>
 								{row.cells.map((cell) => {
-									return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+									return (
+										<td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+									);
 								})}
 							</tr>
 						);
@@ -137,13 +180,24 @@ const TablaStock = ({ columns, data }) => {
 			</Table>
 
 			<Container className="container-paginacion">
-				<Button variant="dark" size="sm" className="mx-2" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+				<Button
+					variant="dark"
+					size="sm"
+					className="mx-2"
+					onClick={() => gotoPage(0)}
+					disabled={!canPreviousPage}
+				>
 					{"<<"}
 				</Button>
-				<Button variant="dark" size="sm" className="mx-2" onClick={() => previousPage()} disabled={!canPreviousPage}>
+				<Button
+					variant="dark"
+					size="sm"
+					className="mx-2"
+					onClick={() => previousPage()}
+					disabled={!canPreviousPage}
+				>
 					{"<"}
 				</Button>
-
 				<input
 					type="number"
 					value={pageIndex + 1}
@@ -156,8 +210,13 @@ const TablaStock = ({ columns, data }) => {
 					className="mx-2 justify-content-center selectInput-paginacion"
 				/>
 				{"  "} of {"  "} {pageOptions.length}
-
-				<Button variant="dark" size="sm" className="mx-2" onClick={() => nextPage()} disabled={!canNextPage}>
+				<Button
+					variant="dark"
+					size="sm"
+					className="mx-2"
+					onClick={() => nextPage()}
+					disabled={!canNextPage}
+				>
 					{">"}
 				</Button>
 				<Button
@@ -169,7 +228,6 @@ const TablaStock = ({ columns, data }) => {
 				>
 					{">>"}
 				</Button>
-
 				<select
 					value={pageSize}
 					onChange={(e) => setPageSize(Number(e.target.value))}

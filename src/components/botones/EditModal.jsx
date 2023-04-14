@@ -4,26 +4,14 @@ import Swal from "sweetalert2";
 import { useUpdateEstadoProductMutation } from "../../api/apiSlice";
 // import { getProduct, updateProduct } from "../../store/slices/products";
 
-const EditModal = (_id) => {
-
-  const [UpdateProduct] = useUpdateEstadoProductMutation()
+const EditModal = ({ producto, _id }) => {
+  const [updateProduct] = useUpdateEstadoProductMutation();
 
   const [show, setShow] = useState(false);
 
-  const [prenda, setPrenda] = useState("");
-  const [marca, setMarca] = useState("");
-  const [categoria, setCategoria] = useState("");
-  const [talle, setTalle] = useState("");
-  const [cliente, setCliente] = useState("");
-  const [precioVenta, setPrecioVenta] = useState();
-  const [estado, setEstado] = useState("");
-
-
   const handleClose = () => setShow(false);
 
-
-  const handleShow = (_id) => {
-
+  const handleShow = () => {
     setShow(true);
   };
 
@@ -41,25 +29,43 @@ const EditModal = (_id) => {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire({ icon: "success", title: "Guardado!", showConfirmButton: false, timer: 1500 });
-        const form = e.target
-        const formData = new FormData(form)
+        Swal.fire({
+          icon: "success",
+          title: "Guardado!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        const form = e.target;
+        const formData = new FormData(form);
 
-        const prenda = formData.get("prenda")
-        const marca = formData.get("marca")
-        const categoria = formData.get("categoria")
-        const talle = formData.get("talle")
-        const cliente = formData.get("cliente")
-        const precioVenta = formData.get("precioVenta")
-        const estado = formData.get("estado")
-        const codigo = formData.get("codigo")
+        const prenda = formData.get("prenda");
+        const marca = formData.get("marca");
+        const categoria = formData.get("categoria");
+        const talle = formData.get("talle");
+        const cliente = formData.get("cliente");
+        const precioVenta = formData.get("precioVenta");
+        const estado = formData.get("estado");
+        const codigo = formData.get("codigo");
 
-        console.log(formData);
-        console.log(_id._id);
-        UpdateProduct(prenda, marca, categoria, precioVenta, talle, cliente, estado)
+        updateProduct({
+          prenda,
+          marca,
+          categoria,
+          precioVenta,
+          talle,
+          cliente,
+          estado,
+          codigo,
+          _id,
+        });
         handleClose();
       } else if (result.isDenied) {
-        Swal.fire({ icon: "info", title: "Los cambios no se guardaron!", showConfirmButton: false, timer: 1500 });
+        Swal.fire({
+          icon: "info",
+          title: "Los cambios no se guardaron!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     });
   };
@@ -91,17 +97,25 @@ const EditModal = (_id) => {
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Código</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Codigo"
+                required
+                maxLength={30}
+                value={producto.codigo}
+                name="codigo"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Prenda</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Nombre del prenda"
                 required
                 maxLength={30}
-                value={prenda}
+                defaultValue={producto.prenda}
                 name="prenda"
-                onChange={(e) => {
-                  setPrenda(e.target.value);
-                }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -111,10 +125,7 @@ const EditModal = (_id) => {
                 placeholder="Marca"
                 required
                 name="marca"
-                value={marca}
-                onChange={(e) => {
-                  setMarca(e.target.value);
-                }}
+                defaultValue={producto.marca}
               />
             </Form.Group>
 
@@ -123,12 +134,8 @@ const EditModal = (_id) => {
               <Form.Control
                 type="text"
                 placeholder="Categoria"
-                value={categoria}
+                defaultValue={producto.categoria}
                 name="categoria"
-                onChange={(e) => {
-                  setCategoria(e.target.value);
-                }}
-
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -138,10 +145,7 @@ const EditModal = (_id) => {
                 placeholder="Talle"
                 required
                 name="talle"
-                value={talle}
-                onChange={(e) => {
-                  setTalle(e.target.value);
-                }}
+                defaultValue={producto.talle}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -149,60 +153,43 @@ const EditModal = (_id) => {
               <Form.Control
                 type="text"
                 placeholder="Cliente"
-                value={cliente}
+                defaultValue={producto.cliente}
                 name="cliente"
-                onChange={(e) => {
-                  setCliente(e.target.value);
-                }}
                 required
               />
             </Form.Group>
 
-
-
-
-
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Precio de venta</Form.Label><br />
+              <Form.Label>Precio de venta</Form.Label>
+              <br />
               <Form.Control
                 type="Number"
                 placeholder="Precio de venta"
                 required
-                value={precioVenta}
+                defaultValue={producto.precioVenta}
                 name="precioVenta"
-                onChange={(e) => {
-                  setPrecioVenta(e.target.value);
-                }}
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Estado</Form.Label><br />
+              <Form.Label>Estado</Form.Label>
+              <br />
               <Form.Select
                 required
-                value={estado}
+                defaultValue={producto.estado}
                 name="estado"
-                onChange={(e) => {
-                  setEstado(e.target.value);
-                }}
               >
                 <option>local</option>
                 <option>vendido</option>
               </Form.Select>
             </Form.Group>
 
-
-
-
             <Button size="lg" variant="dark" type="submit">
               Guardar
             </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-
-
-        </Modal.Footer>
+        <Modal.Footer></Modal.Footer>
       </Modal>
     </>
   );

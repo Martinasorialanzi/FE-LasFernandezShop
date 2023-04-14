@@ -11,7 +11,7 @@ const ViewProductsModal = ({ producto }, _id) => {
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	const [deleteProduct] = useDeleteProductMutation()
+	const [deleteProduct] = useDeleteProductMutation();
 
 	const borrarProduct = useCallback((_id) => {
 		Swal.fire({
@@ -24,8 +24,7 @@ const ViewProductsModal = ({ producto }, _id) => {
 			confirmButtonText: "Si, borrar!",
 		}).then((result) => {
 			if (result.isConfirmed) {
-
-				deleteProduct(_id._id)
+				deleteProduct(_id._id);
 				Swal.fire({
 					icon: "success",
 					title: "Producto borrado!",
@@ -39,7 +38,12 @@ const ViewProductsModal = ({ producto }, _id) => {
 
 	return (
 		<>
-			<Button variant="dark" size="sm" onClick={handleShow} className="botonVerProducto">
+			<Button
+				variant="dark"
+				size="sm"
+				onClick={handleShow}
+				className="botonVerProducto"
+			>
 				Ver Producto
 			</Button>
 
@@ -94,8 +98,12 @@ const ViewProductsModal = ({ producto }, _id) => {
 					</div>
 				</Modal.Body>
 				<Modal.Footer>
-					<EditModal _id={producto._id} />
-					<Button variant="dark" size="md" onClick={(e) => borrarProduct({ _id: producto._id })}>
+					<EditModal producto={producto} _id={producto._id} />
+					<Button
+						variant="dark"
+						size="md"
+						onClick={(e) => borrarProduct({ _id: producto._id })}
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"

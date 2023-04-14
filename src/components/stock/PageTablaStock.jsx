@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 import { useGetProductsQuery } from "../../api/apiSlice";
 import { ButtonDevolver, ButtonVender } from "../botones/ButtonsUpdateEstado";
 import ViewProductsModal from "../botones/ViewProductsModal";
 import "../stock/tablaStock.css";
-import TablaStock from './TablaStock';
+import TablaStock from "./TablaStock";
 
 const PageTablaStock = () => {
 	const columns = useMemo(
@@ -49,7 +49,14 @@ const PageTablaStock = () => {
 			{
 				Header: "VENDIDO",
 				accessor: (p) => (
-					<> {p.estado === "vendido" ? <ButtonDevolver _id={p._id} /> : <ButtonVender _id={p._id} />} </>
+					<>
+						{" "}
+						{p.estado === "vendido" ? (
+							<ButtonDevolver _id={p._id} />
+						) : (
+							<ButtonVender _id={p._id} />
+						)}{" "}
+					</>
 				),
 			},
 			{
@@ -61,9 +68,9 @@ const PageTablaStock = () => {
 				),
 			},
 		],
-		[],
+		[]
 	);
-	const { data, isError, isLoading, error } = useGetProductsQuery()  //ME PUEDO DVOLVER LA DATA, EL ERROR(TRUE FALSE), PROPIEDAD IS LOADING (TRUEFALSE), ERROR CUAL ES EL ERROR
+	const { data, isError, isLoading, error } = useGetProductsQuery(); //ME PUEDO DVOLVER LA DATA, EL ERROR(TRUE FALSE), PROPIEDAD IS LOADING (TRUEFALSE), ERROR CUAL ES EL ERROR
 
 	if (isLoading) return <div>Loading...</div>;
 	else if (isError) return <div>Error:{error}</div>;
@@ -71,7 +78,7 @@ const PageTablaStock = () => {
 		<>
 			<TablaStock data={data.totalProducts} columns={columns} />
 		</>
-	)
-}
+	);
+};
 
-export default PageTablaStock
+export default PageTablaStock;
