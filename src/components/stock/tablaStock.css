@@ -1,55 +1,64 @@
 .offcanvasFiltros {
-    max-width: 55% !important;
-    width: 300px !important;
-  }
-  
-  .container-filtro{
+  max-width: 55% !important;
+  width: 300px !important;
+}
 
-   
-    display: flex;
-      justify-content: flex-end;
-      margin-right: 15%;
-      padding: 0;
-      margin-top: 5%;
-  }
-
-  .div-buscador{ 
-   margin-top: 2%; 
+.container-filtro {
   display: flex;
-    justify-content: flex-end;
-    margin-left: 0;
-    margin-right: 10%;
-    padding: 0;
-  }
-  
-  .div-titulo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 4%;
-    margin-top: 2%;
-  }
+  justify-content: flex-end;
+  margin-right: 15%;
+  padding: 0;
+  margin-top: 5%;
+}
 
-  .div-buscador-filtros{
-    margin: 3%;
-    display: flex;
-    justify-content: flex-end;
-  }
+.div-buscador {
+  margin-top: 2%;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 0;
+  margin-right: 10%;
+  padding: 0;
+}
 
-  .container-paginacion{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2%;
-  }
+.div-titulo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 4%;
+  margin-top: 2%;
+}
 
-  .selectInput-paginacion{
-    border-color: black;
-    border-radius: 8%;
-    border-width: 2px;
-  }
+.div-buscador-filtros {
+  margin: 3%;
+  display: flex;
+  justify-content: flex-end;
+}
 
-  .tablaStock{
-    text-align: center !important;
-    align-content: center !important;
-    align-items: center !important;
-  }
+.container-paginacion {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2%;
+}
+
+.selectInput-paginacion {
+  border-color: black;
+  border-radius: 8%;
+  border-width: 2px;
+}
+
+.tablaStock {
+  text-align: center !important;
+  align-content: center !important;
+  align-items: center !important;
+}
+
+.btn-agregar-producto {
+  width: 18%;
+}
+
+.container-agregar-producto {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+}

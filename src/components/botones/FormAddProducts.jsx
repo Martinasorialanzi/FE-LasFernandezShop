@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { useCreateProductMutation } from "../../api/apiSlice";
+import "../stock/tablaStock.css";
+
 
 const FormAddProducts = (codigo) => {
     const [createProduct] = useCreateProductMutation();
@@ -81,7 +83,7 @@ const FormAddProducts = (codigo) => {
 
     return (
         <>
-            <Button variant="dark" size="md" onClick={(e) => handleShow()}>
+            <Button variant="dark" className="btn-agregar-producto" size="sm" onClick={(e) => handleShow()}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -89,7 +91,7 @@ const FormAddProducts = (codigo) => {
                     strokeWidth={1.5}
                     stroke="currentColor"
                     className="w-6 h-6"
-                    width={30}
+                    width={27}
                 >
                     <path
                         strokeLinecap="round"
@@ -109,7 +111,7 @@ const FormAddProducts = (codigo) => {
                             <Form.Label>Codigo</Form.Label>
                             <Form.Control
                                 required
-                                value={Number(codigo.codigo)}
+                                value={Number(codigo.codigo + 1)}
                                 name="codigo"
                             />
                         </Form.Group>

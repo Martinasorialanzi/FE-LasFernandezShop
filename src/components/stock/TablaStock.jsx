@@ -65,12 +65,12 @@ const TablaStock = ({ columns, data }) => {
 		<>
 			<Stack direction="horizontal">
 				<Container className="div-titulo">
-					<h2 className="justify-content-center">Tabla de stock</h2>
+					<h1 className="justify-content-center">Tabla de stock</h1>
 				</Container>
 
 				<Stack direction="vertical" className="div-buscador-filtros">
-					<div className="div-buscador ">
-						<b className="m-1"> Buscar: </b>
+					<div className="div-buscador mb-3 ">
+						<b className="m-1 "> Buscar: </b>
 						<br />
 						<input
 							type="text"
@@ -78,6 +78,9 @@ const TablaStock = ({ columns, data }) => {
 							onChange={(e) => setGlobalFilter(e.target.value)}
 							className="selectInput-paginacion"
 						/>
+					</div>
+					<div className="container-agregar-producto">
+						<FormAddProducts codigo={preGlobalFilteredRows.length} />
 					</div>
 
 					<Container className=" container-filtro">
@@ -114,16 +117,17 @@ const TablaStock = ({ columns, data }) => {
 											<label>
 												<input
 													type="checkbox"
+													variant="dark"
 													{...column.getToggleHiddenProps()}
 												/>
-												{column.Header}
+												{"   "}{column.Header}
 											</label>
 										</div>
 									))}
 								</div>
 							</Offcanvas.Body>
 						</Offcanvas>
-						<FormAddProducts codigo={preGlobalFilteredRows.length} />
+
 					</Container>
 				</Stack>
 			</Stack>
