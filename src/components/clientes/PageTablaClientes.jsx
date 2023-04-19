@@ -1,14 +1,13 @@
-import { groupBy, toArray, uniqBy } from "lodash";
+import _ from 'lodash';
 import React, { useMemo } from "react";
-import { useGetProductsQuery } from "../../api/apiSlice";
+import { useGetAllClientsQuery } from "../../api/apiSlice";
 import "../stock/tablaStock.css";
-import TablaCliente from "./TablaCliente";
 
 
 const PageTablaStock = () => {
     const columns = useMemo(
         () => [
-            { Header: "Id", accessor: "codigo" },
+            // { Header: "Id", accessor: "codigo" },
             { Header: "CLIENTE", accessor: "cliente" },
             // { Header: "PRENDA", accessor: "prenda" },
             // { Header: "MARCA", accessor: "marca" },
@@ -59,20 +58,20 @@ const PageTablaStock = () => {
         ],
         []
     );
-    const { data, isError, isLoading, error } = useGetProductsQuery(); //ME PUEDO DVOLVER LA DATA, EL ERROR(TRUE FALSE), PROPIEDAD IS LOADING (TRUEFALSE), ERROR CUAL ES EL ERROR
+    const { data, isError, isLoading, error } = useGetAllClientsQuery(); //ME PUEDO DVOLVER LA DATA, EL ERROR(TRUE FALSE), PROPIEDAD IS LOADING (TRUEFALSE), ERROR CUAL ES EL ERROR
 
     if (isLoading) return <div>Loading...</div>;
     else if (isError) return <div>Error:{error}</div>;
-    const clientes = uniqBy(data.totalProducts, "cliente")
-    console.log(clientes)
+    const clientes = _.uniqBy(data.totalProducts, "cliente")
+    console.log(data.clients)
 
-    const clientes1 = toArray(groupBy(data.totalProducts, "cliente"))
-    console.log(clientes1)
+    // const clientes1 = toArray(groupBy(data.totalProducts, "cliente"))
+    // console.log(clientes1)
 
 
     return (
         <>
-            <TablaCliente data={clientes} columns={columns} />
+            {/* <TablaCliente data={data.clients} columns={columns} /> */}
         </>
     );
 };

@@ -37,12 +37,22 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Products"],
     }),
+
+    getAllClients:build.query({
+      query:()=>"/clients",
+      providesTags: ["Clients"],
+  }),
+  invalidatesTags: ["Products"],
   }),
 });
+
+
+
 
 export const {
   useGetProductsQuery,
   useCreateProductMutation,
   useDeleteProductMutation,
   useUpdateEstadoProductMutation,
+  useGetAllClientsQuery,
 } = apiSlice; //hook para solicitar datos //esto es un hook que da redux toolkit para usarlo en el frontend y me permite maejar cuadno esta cargando , cuando hay un error, etc
