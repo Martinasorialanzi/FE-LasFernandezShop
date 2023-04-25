@@ -2,14 +2,15 @@ import _ from 'lodash';
 import React, { useMemo } from "react";
 import { useGetAllClientsQuery } from "../../api/apiSlice";
 import "../stock/tablaStock.css";
+import TablaCliente from './TablaCliente';
 
 
 const PageTablaStock = () => {
     const columns = useMemo(
         () => [
-            // { Header: "Id", accessor: "codigo" },
+            { Header: "Id", accessor: "" },
             { Header: "CLIENTE", accessor: "cliente" },
-            // { Header: "PRENDA", accessor: "prenda" },
+            { Header: "Prendas vendidas", accessor: "" },
             // { Header: "MARCA", accessor: "marca" },
             // { Header: "CATEGORIA", accessor: "categoria" },
 
@@ -62,8 +63,12 @@ const PageTablaStock = () => {
 
     if (isLoading) return <div>Loading...</div>;
     else if (isError) return <div>Error:{error}</div>;
-    const clientes = _.uniqBy(data.totalProducts, "cliente")
-    console.log(data.clients)
+    const clientes = {
+        lista: _.groupBy(data.totalProducts, "cliente"),
+        // sumaMontos: _.sumBy(data.totalProducts, "precioVenta")
+    }
+    // console.log(clientes)
+    console.log(data.clientes)
 
     // const clientes1 = toArray(groupBy(data.totalProducts, "cliente"))
     // console.log(clientes1)
@@ -71,7 +76,7 @@ const PageTablaStock = () => {
 
     return (
         <>
-            {/* <TablaCliente data={data.clients} columns={columns} /> */}
+            <TablaCliente data={data.clientes} columns={columns} />
         </>
     );
 };

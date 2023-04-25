@@ -72,8 +72,10 @@ const PageTablaStock = () => {
 	);
 	const { data, isError, isLoading, error } = useGetProductsQuery(); //ME PUEDO DVOLVER LA DATA, EL ERROR(TRUE FALSE), PROPIEDAD IS LOADING (TRUEFALSE), ERROR CUAL ES EL ERROR
 
+
 	if (isLoading) return <div>Loading...</div>;
 	else if (isError) return <div>Error:{error}</div>;
+	console.log(data)
 	return (
 		<>
 			<TablaStock data={data.totalProducts} columns={columns} />
