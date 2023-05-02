@@ -2,15 +2,25 @@ import _ from 'lodash';
 import React, { useMemo } from "react";
 import { useGetAllClientsQuery } from "../../api/apiSlice";
 import "../stock/tablaStock.css";
+import BtnVerMas from './BtnVerMas';
 import TablaCliente from './TablaCliente';
 
 
 const PageTablaStock = () => {
     const columns = useMemo(
         () => [
-            { Header: "Id", accessor: "" },
-            { Header: "CLIENTE", accessor: "cliente" },
-            { Header: "Prendas vendidas", accessor: "" },
+            { Header: "Id", accessor: (p) => _.indexOf(p) },
+            { Header: "PROVEEDOR", accessor: "proveedor" },
+            { Header: "PRENDAS VENDIDAS", accessor: (p) => ` ${_.filter(p.productos, { "estado": "vendido" }).length}/${p.productos.length} ` },
+            { Header: "GANANCIA PROVEEDOR", accessor: (p) => `$ ${_.sumBy(_.filter(p.productos, { "estado": "vendido" }), "precioVenta")}` },
+            { Header: "DINERO ENTREGADO", accessor: (p) => `$ ${p.dineroPagado}` },
+            { Header: "GANANCIA LAS FERNANDEZ SHOP", accessor: (p) => `$ ${_.sumBy(_.filter(p.productos, { "estado": "vendido" }), "precioVenta") * 0.20}` },
+            { Header: "VER MAS", accessor: (p) => <BtnVerMas producto={p} /> },
+
+
+
+            // poner columna cantidad $pagada, restante,ganancia fernadez shop, boton paga, boton ver productos-> en este poner las prendas con fecha de recibido y fecha de venta, ganancia, cantidad pagada, sobrante, fechas de pago,boton pagar}
+
             // { Header: "MARCA", accessor: "marca" },
             // { Header: "CATEGORIA", accessor: "categoria" },
 
@@ -63,16 +73,7 @@ const PageTablaStock = () => {
 
     if (isLoading) return <div>Loading...</div>;
     else if (isError) return <div>Error:{error}</div>;
-    const clientes = {
-        lista: _.groupBy(data.totalProducts, "cliente"),
-        // sumaMontos: _.sumBy(data.totalProducts, "precioVenta")
-    }
-    // console.log(clientes)
     console.log(data.clientes)
-
-    // const clientes1 = toArray(groupBy(data.totalProducts, "cliente"))
-    // console.log(clientes1)
-
 
     return (
         <>
