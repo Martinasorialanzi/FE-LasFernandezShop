@@ -1,7 +1,8 @@
+
 import _ from 'lodash';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import { Button, Card, Col, Container, Modal, Row } from 'react-bootstrap';
+import BtnPagar from './BtnPagar';
 
 
 const BtnVerMas = ({ producto, _id }) => {
@@ -25,21 +26,68 @@ const BtnVerMas = ({ producto, _id }) => {
 
             </Button>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} size="lg" className="justify-content-center">
                 <Modal.Header closeButton>
                     <Modal.Title>{producto.proveedor}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    Cantidad de Prendas entregadas: {producto.productos.length}
-                    <br></br>
-                    Cantidad de prendas vendidas: {_.filter(producto.productos, { "estado": "vendido" }).length}
-                    <br></br>
-                    Ganancia de {producto.proveedor}: ${_.sumBy(_.filter(producto.productos, { "estado": "vendido" }), "precioVenta")}
-                    <br></br>
-                    Total dinero entregado: ${producto.dineroPagado}
-                    <br></br>
-                    Dinero restante a pagar: ${_.sumBy(_.filter(producto.productos, { "estado": "vendido" }), "precioVenta") - producto.dineroPagado}
+                    <Container>
+                        <Row className="justify-content-md-center">
+                            <Col xs lg="6" >
 
+                                <Card style={{ height: '7em' }} className='justify-content-center'>
+                                    <Card.Title>Total prendas</Card.Title>
+
+                                    <Card.Body>{producto.productos.length}</Card.Body>
+                                </Card>
+                            </Col>
+                            <Col xs lg="6" className='justify-content-center'>
+                                <Card style={{ height: '7em' }} className='justify-content-center'>
+                                    <Card.Title className='justify-content-center'>Cantidad prendas vendidas</Card.Title>
+
+                                    <Card.Body className='justify-content-center'>{_.filter(producto.productos, { "estado": "vendido" }).length}</Card.Body>
+                                </Card>
+                            </Col>
+                            {/* <Col xs lg="2">
+                                <Card>
+                                    <Card.Title>Total prendas</Card.Title>
+
+                                    <Card.Body>This is some text within a card body.</Card.Body>
+                                </Card>
+                            </Col> */}
+                        </Row>
+                        <Row className="justify-content-md-center m-2" >
+                            <Col xs lg="4">
+                                <Card style={{ height: '8em' }}>
+
+                                    <Card.Title> Ganancia </Card.Title>
+
+                                    <Card.Body>${_.sumBy(_.filter(producto.productos, { "estado": "vendido" }), "precioVenta")}</Card.Body>
+                                </Card></Col>
+                            <Col xs lg="4">
+                                <Card style={{ height: '8em' }}>
+                                    <Card.Title>Total dinero pagado </Card.Title>
+
+                                    <Card.Body>
+                                        ${producto.dineroPagado}
+                                        <br />
+                                        Ultimo pago: ${producto.ultimoPago}
+                                        <br />
+                                        Fecha ultimpo pago: {producto.fechaUltimoPago}
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                            <Col xs lg="4">
+                                <Card style={{ height: '9em' }}>
+                                    <Card.Title>Dinero restante a pagar</Card.Title>
+                                    <Card.Body>${_.sumBy(_.filter(producto.productos, { "estado": "vendido" }), "precioVenta") - producto.dineroPagado}
+                                        <br /><br />
+                                        <BtnPagar producto={producto} />
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </Container>
 
                 </Modal.Body>
                 <Modal.Footer>
@@ -50,7 +98,7 @@ const BtnVerMas = ({ producto, _id }) => {
                         Save Changes
                     </Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal >
         </>
     )
 }
